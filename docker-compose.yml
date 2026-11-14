@@ -1,0 +1,75 @@
+name: cafeteria-udec
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cafeteria-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
+      MENU_DB_PASSWORD: ${MENU_DB_PASSWORD:?Defina MENU_DB_PASSWORD en .env}
+      PEDIDOS_DB_PASSWORD: ${PEDIDOS_DB_PASSWORD:?Defina PEDIDOS_DB_PASSWORD en .env}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    # Sin "ports": la base de datos NO se publica en el equipo anfitrión;
+    # solo los microservicios la alcanzan por la red interna.
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  menu-ms:
+    build: ./menu-ms
+    container_name: cafeteria-menu
+    hostname: menu-ms
+    environment:
+      MENU_DB_URL: jdbc:postgresql://postgres:5432/menu_db
+      MENU_DB_USER: menu_user
+      MENU_DB_PASSWORD: ${MENU_DB_PASSWORD}
+      ENCARGADO_USUARIO: ${ENCARGADO_USUARIO:-encargado}
+      ENCARGADO_PASSWORD: ${ENCARGADO_PASSWORD:?Defina ENCARGADO_PASSWORD en .env}
+    ports:
+      - "8081:8081"
+    networks:
+      - backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8081/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+      start_period: 30s
+    restart: unless-stopped
+
+  pedidos-ms:
+    build: ./pedidos-ms
+    container_name: cafeteria-pedidos
+    hostname: pedidos-ms
+    environment:
+      PEDIDOS_DB_URL: jdbc:postgresql://postgres:5432/pedidos_db
+      PEDIDOS_DB_USER: pedidos_user
+      PEDIDOS_DB_PASSWORD: ${PEDIDOS_DB_PASSWORD}
+      MENU_URL: http://menu-ms:8081
+    ports:
+      - "8082:8082"
+    networks:
+      - backend
+    depends_on:
+      menu-ms:
+        condition: service_healthy
+    restart: unless-stopped
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  postgres-data:
