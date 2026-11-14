@@ -1,0 +1,41 @@
+server:
+  port: 8081
+  error:
+    # Nunca exponer detalles internos (trazas, mensajes de excepción) al usuario
+    include-stacktrace: never
+    include-message: never
+
+spring:
+  application:
+    name: menu-ms
+  datasource:
+    url: ${MENU_DB_URL:jdbc:postgresql://localhost:5432/menu_db}
+    username: ${MENU_DB_USER:menu_user}
+    # Sin valor por defecto: si no se define la variable, el servicio no arranca
+    password: ${MENU_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  jackson:
+    mapper:
+      accept-case-insensitive-enums: true
+    deserialization:
+      # "12.5" no se convierte silenciosamente a 12: se rechaza como precio inválido
+      accept-float-as-int: false
+
+app:
+  seguridad:
+    encargado:
+      usuario: ${ENCARGADO_USUARIO:encargado}
+      password: ${ENCARGADO_PASSWORD}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true

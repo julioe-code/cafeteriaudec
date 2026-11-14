@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:menu_test;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+app:
+  seguridad:
+    encargado:
+      usuario: encargado-test
+      password: clave-de-prueba
