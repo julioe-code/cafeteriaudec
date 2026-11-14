@@ -1,0 +1,39 @@
+:root {
+    --verde: #1f6f43;
+    --verde-claro: #e8f3ec;
+    --gris: #5f6b66;
+    --rojo: #b3261e;
+    --fondo: #f7f8f7;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: #1d2421;
+    background: var(--fondo);
+}
+
+body { margin: 0; }
+header { background: var(--verde); color: #fff; padding: 1.25rem 1.5rem; }
+header h1 { margin: 0 0 .25rem; font-size: 1.5rem; }
+header p { margin: 0; opacity: .85; }
+main { max-width: 960px; margin: 0 auto; padding: 1.5rem; }
+footer { text-align: center; padding: 1rem; color: var(--gris); }
+footer a { color: var(--verde); }
+
+.menu { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+.producto { background: #fff; border-radius: 10px; padding: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,.08); position: relative; }
+.producto h3 { margin: .35rem 0; font-size: 1.05rem; }
+.producto .categoria { font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--verde); }
+.producto .precio { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+.producto.agotado { opacity: .55; }
+.etiqueta-agotado { position: absolute; top: .75rem; right: .75rem; background: var(--rojo); color: #fff; font-size: .7rem; padding: .15rem .5rem; border-radius: 999px; }
+
+.mensaje { background: var(--verde-claro); padding: 1rem; border-radius: 8px; }
+.tarjeta { background: #fff; border-radius: 10px; padding: 1.25rem; margin-bottom: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.tarjeta h2 { margin-top: 0; font-size: 1.15rem; }
+label { display: block; margin-bottom: .75rem; font-size: .9rem; }
+input, select { display: block; width: 100%; max-width: 360px; padding: .5rem; margin-top: .25rem; border: 1px solid #c9d1cd; border-radius: 6px; font: inherit; }
+button { background: var(--verde); color: #fff; border: 0; padding: .5rem 1rem; border-radius: 6px; font: inherit; cursor: pointer; }
+button.secundario { background: #fff; color: var(--verde); border: 1px solid var(--verde); }
+.error { color: var(--rojo); min-height: 1.2em; }
+.ok { color: var(--verde); }
+table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+th, td { text-align: left; padding: .5rem; border-bottom: 1px solid #e4e8e6; }
+td:nth-child(3) { font-variant-numeric: tabular-nums; }

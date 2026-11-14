@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Encargado · Cafetería UdeC Ubaté</title>
+    <link rel="stylesheet" href="/assets/estilos.css">
+</head>
+<body>
+<header>
+    <h1>Panel del encargado</h1>
+    <p>Administración del menú del día</p>
+</header>
+<main>
+    <form id="form-login" class="tarjeta" autocomplete="off">
+        <h2>Iniciar sesión</h2>
+        <label>Usuario <input name="usuario" required maxlength="50"></label>
+        <label>Contraseña <input name="contrasena" type="password" required maxlength="100"></label>
+        <button type="submit">Entrar</button>
+        <p class="error" data-error></p>
+    </form>
+
+    <div id="panel" hidden>
+        <form id="form-producto" class="tarjeta" novalidate>
+            <h2>Registrar producto</h2>
+            <label>Nombre <input name="nombre" maxlength="80"></label>
+            <label>Categoría
+                <select name="categoria">
+                    <option value="">Seleccione…</option>
+                    <option value="ALMUERZO">Almuerzo</option>
+                    <option value="BEBIDA">Bebida</option>
+                    <option value="SNACK">Snack</option>
+                </select>
+            </label>
+            <label>Precio (COP) <input name="precio" inputmode="numeric"></label>
+            <button type="submit">Guardar</button>
+            <p class="error" data-error></p>
+            <p class="ok" data-ok></p>
+        </form>
+
+        <section class="tarjeta">
+            <h2>Productos registrados</h2>
+            <table>
+                <thead><tr><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Estado</th><th></th></tr></thead>
+                <tbody id="tabla-productos"></tbody>
+            </table>
+            <p class="error" id="error-tabla"></p>
+        </section>
+        <button id="salir" class="secundario">Cerrar sesión</button>
+    </div>
+</main>
+<footer><a href="/">Ver menú del día</a></footer>
+<script src="/assets/comun.js"></script>
+<script src="/assets/admin.js"></script>
+</body>
+</html>
