@@ -1,0 +1,24 @@
+# Revisa cada semana si hay versiones nuevas (con parches de seguridad)
+# de las dependencias y abre un Pull Request automáticamente.
+version: 2
+updates:
+  - package-ecosystem: maven
+    directory: /menu-ms
+    schedule:
+      interval: weekly
+  - package-ecosystem: maven
+    directory: /pedidos-ms
+    schedule:
+      interval: weekly
+  - package-ecosystem: docker
+    directory: /menu-ms
+    schedule:
+      interval: weekly
+  - package-ecosystem: docker
+    directory: /pedidos-ms
+    schedule:
+      interval: weekly
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
