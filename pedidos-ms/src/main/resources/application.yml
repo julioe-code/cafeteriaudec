@@ -1,0 +1,32 @@
+server:
+  port: 8082
+  error:
+    include-stacktrace: never
+    include-message: never
+
+spring:
+  application:
+    name: pedidos-ms
+  datasource:
+    url: ${PEDIDOS_DB_URL:jdbc:postgresql://localhost:5432/pedidos_db}
+    username: ${PEDIDOS_DB_USER:pedidos_user}
+    password: ${PEDIDOS_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  http:
+    client:
+      # Si menu-ms no responde a tiempo, el pedido no se registra (CF-PEDI-0001, escenario 4)
+      connect-timeout: 2s
+      read-timeout: 3s
+
+app:
+  menu:
+    url: ${MENU_URL:http://localhost:8081}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

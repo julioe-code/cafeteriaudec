@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:pedidos_test;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+app:
+  menu:
+    url: http://menu-ms:8081
